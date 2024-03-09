@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Search</title>
+</head>
+<body>
+  <input type="text" id="searchInput" placeholder="Search for products...">
+  <button id="searchButton">Search</button>
+  <ul id="productsList"></ul>
+
+  <script>
+    // Sample array of products
+    const products = [
+      { id: 1, name: 'Product 1', price: 10 },
+      { id: 2, name: 'Product 2', price: 20 },
+      { id: 3, name: 'Product 3', price: 30 },
+      { id: 4, name: 'Another Product', price: 25 },
+      { id: 5, name: 'Yet Another Product', price: 15 }
+    ];
+
+    // Function to render products based on search query
+    function renderProducts(searchQuery) {
+      // Filter products based on the search query
+      const filteredProducts = products.filter(product => {
+        // Convert both product name and search query to lowercase for case-insensitive search
+        const productName = product.name.toLowerCase();
+        const query = searchQuery.toLowerCase();
+        // Return true if the product name contains the search query
+        return productName.includes(query);
+      });
+
+      // Get the products list container element
+      const productsList = document.getElementById('productsList');
+
+      // Clear previous search results
+      productsList.innerHTML = '';
+
+      // Render filtered products
+      filteredProducts.forEach(product => {
+        const listItem = document.createElement('li');
+        listItem.textContent = `${product.name} - $${product.price}`;
+        productsList.appendChild(listItem);
+      });
+    }
+
+    // Function to handle search
+    function handleSearch() {
+      const searchInput = document.getElementById('searchInput');
+      const searchQuery = searchInput.value;
+      renderProducts(searchQuery);
+    }
+
+    // Add event listener to the search button
+    document.getElementById('searchButton').addEventListener('click', handleSearch);
+
+    // Initially render all products
+    renderProducts('');
+  </script>
+</body>
+</html>
